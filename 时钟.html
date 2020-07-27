@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        .clock {
+            width: 600px;
+            height: 600px;
+            margin: 100px auto;
+            background: url(images/clock.jpg) no-repeat;
+            position: relative;
+        }
+
+        .clock div {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url(images/hour.png) no-repeat center center;
+        }
+
+        #m {
+            background-image: url(images/minute.png);
+        }
+
+        #s {
+            background-image: url(images/second.png);
+        }
+    </style>
+
+</head>
+
+<body>
+    <div class="clock">
+        <div id="h"></div>
+        <div id="m"></div>
+        <div id="s"></div>
+    </div>
+
+    <script>
+        let h = document.querySelector('#h');
+        let m = document.querySelector('#m');
+        let s = document.querySelector('#s');
+
+        function time() {
+            let time = new Date()
+           
+           //获得时间对象中的时分秒毫秒
+            let nowH = time.getHours();
+            let nowM = time.getMinutes();
+            let nowS = time.getSeconds();
+            let secMin = time.getMilliseconds()
+
+            //将时分秒转换成为表盘的度数
+            //一小时--->30度
+            //一分钟--->6度
+            //一秒钟--->6度
+            let hDeg = nowH * 30 + (nowM/60)*30 +'deg';
+            let mDeg = nowM * 6 + (nowS/60)*6 +'deg';
+            let sDeg = nowS * 6 + (secMin/1000)*6+'deg';
+            
+            //将计算好的角度，赋值给对应的针
+            h.style.transform = 'rotate(' + hDeg + ')';
+            m.style.transform = 'rotate(' + mDeg + ')';
+            s.style.transform = 'rotate(' + sDeg + ')';
+        }
+        time()
+        setInterval(time, 10)
+    </script>
+</body>
